@@ -1,0 +1,37 @@
+{
+  "name": "AsyncLabAPIServer",
+  "version": "0.0.1",
+  "description": "Async Lab API Server",
+  "main": "server.js",
+  "dependencies": {
+    "apidoc": "^0.16.1",
+    "app-root-path": "^1.0.0",
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.1",
+    "cors": "^2.7.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "lodash": "^4.17.2",
+    "parameters-middleware": "^0.1.0"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "docs": "apidoc -i server/ -o docs/ -f \".*\\.js$\"",
+    "dev": "nodemon --ext js --watch ./server -x npm run --silent serv",
+    "codeCheck": "eslint './server/**/*.js' './test/**/*.js'&&eslint ./server/**/*.js ./test/**/*.js",
+    "serv": "npm run --silent codeCheck && export NODE_ENV=development||set NODE_ENV=development&& npm run --slient docs && node ./server.js"
+  },
+  "engines": {
+    "node": ">=6.2.1",
+    "npm": ">=3.8.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hhsadiq/async-lab.git"
+  },
+  "private": false,
+  "devDependencies": {
+    "eslint": "^2.12.0",
+    "nodemon": "^1.9.2"
+  }
+}
