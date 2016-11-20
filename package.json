@@ -6,13 +6,16 @@
   "dependencies": {
     "apidoc": "^0.16.1",
     "app-root-path": "^1.0.0",
-    "bluebird": "^3.4.1",
+    "bluebird": "^3.4.6",
     "body-parser": "^1.15.1",
     "cors": "^2.7.1",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "lodash": "^4.17.2",
-    "parameters-middleware": "^0.1.0"
+    "normalize-url": "^1.8.0",
+    "parameters-middleware": "^0.1.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
   },
   "scripts": {
     "start": "node ./server.js",

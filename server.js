@@ -36,6 +36,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use('/docs', express.static(__dirname + '/docs'));
 }
 
+//Directory to store generated output html file
+app.use(express.static(__dirname + '/output'));
+
 //Error Handler Middleware
 app.use(require('./server/middleware/errorHandler.middleware'));
 
