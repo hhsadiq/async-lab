@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-let parameters = require('parameters-middleware');
 let constants = require('../common/constants');
 const router = express.Router();
 let titlesController = require('./titles.controller');
@@ -31,12 +30,19 @@ let CommonError = require('../common/commonErrors');
  *       "Message": "API Specific Error"
  *     }
  */
-router.get('/:id',
-  parameters(constants.routeParams.titles.retrieve, {
-    message: function(missing) {
-      return new CommonError(400, 'Missing Params ' + missing.join(', '));
+router.get('/',
+  function(req, res, next) {
+    let validation = constants.params.titles.retrieve.query;
+    if (!req.query[validation.required]) {
+      next(new CommonError(validation.errors.required.code,
+        validation.errors.required.msg));
     }
-  }),
+    if (Object.keys(req.query).length > 1) {
+      next(new CommonError(validation.errors.invalid.code,
+        validation.errors.invalid.msg));
+    }
+    next();
+  },
   titlesController.retrieve);
 
 module.exports = router;

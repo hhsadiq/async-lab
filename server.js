@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({limit: '50mb'}));
 
 // loading routes
-app.use('/', require('./server/routes/index'));
+app.use('', require('./server/routes/index'));
 
 //static route for the docs
 if (process.env.NODE_ENV === 'development') {

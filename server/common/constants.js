@@ -1,9 +1,23 @@
 'use strict';
 
 module.exports = {
-  routeParams: {
+  params: {
     titles: {
-      retrieve: {params: ['address']}
+      retrieve: {
+        query: {
+          required: 'address',
+          errors: {
+            required: {
+              code: 400,
+              msg: 'Missing query param address'
+            },
+            invalid: {
+              code: 400,
+              msg: 'Invalid query param(s) found'
+            }
+          }
+        }
+      }
     }
   }
 };

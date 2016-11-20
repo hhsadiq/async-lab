@@ -6,10 +6,10 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('I/want/title', require('../titles/titles.routes'));
+router.use('/I/want/title', require('../titles/titles.routes'));
 
 //generic catch others, not implemented
-router.get('*', function(req, res) {
+router.get('/*', function(req, res) {
   res.status(404).send('URL not found');
 });
 

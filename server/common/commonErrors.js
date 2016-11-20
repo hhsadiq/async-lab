@@ -14,8 +14,8 @@ class CommonErrors {
       default: 'An unknown error occurred'
     });
     return {
-      error: errorCode,
-      message: overideMessage ?
+      code: errorCode,
+      msg: overideMessage ?
         overideMessage : this[errorCode] ?
         this[errorCode] : this.default
     };
