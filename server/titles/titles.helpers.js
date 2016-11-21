@@ -47,8 +47,11 @@ module.exports.normalize = normalize;
 function renderHtml(addresses) {
   let html = constants.response.html;
   let $ = cheerio.load(html);
-  addresses.forEach(address => $('ul')
-    .append(`<li>${address.originalUri} - "${address.title}"</li>`));
+  addresses.forEach(address => {
+    let title = address.title === titleErrors['400'] ?
+      titleErrors['400'] : `"${address.title}"`;
+    $('ul').append(`<li>${address.originalUri} - ${title}</li>`);
+  });
   return $.html();
 }
 module.exports.renderHtml = renderHtml;
