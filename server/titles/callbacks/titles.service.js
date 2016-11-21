@@ -19,21 +19,21 @@ function retrieve(addresses, callback) {
   _(addresses)
     .uniqBy('normalizedUri')
     .map((address, i, arr) => {
-      request(address.normalizedUri, (err, res, body) => {
+      request(address.normalizedUri, function (err, res, body) {
         callbackCount++;
         if (err) {
           console.error(err.msg || err.message);
-          helpers.updateTitles(addresses, res.request.href, titleErrors['400']);
+          helpers.updateTitles(this.all, this.current.normalizedUri, titleErrors['400']);
         }
         if (!err && res.statusCode == 200) {
           let $ = cheerio.load(body);
           let title = $('title').text();
-          helpers.updateTitles(addresses, res.request.href, title);
+          helpers.updateTitles(this.all, this.current.normalizedUri, title);
         }
         if (callbackCount === arr.length) {
           callback(null, helpers.renderHtml(addresses));
         }
-      });
+      }.bind({current: address, all: addresses}));
     })
     .value();
 }
