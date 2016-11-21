@@ -3,7 +3,7 @@
 const express = require('express');
 const constants = require('../common/constants');
 const router = express.Router();
-const titlesController = require('./titles.controller');
+const promisedTitlesController = require('./promises/titles.controller');
 const CommonError = require('../common/commonErrors');
 
 /**
@@ -43,6 +43,6 @@ router.get('/',
     }
     next();
   },
-  titlesController.retrieve);
+  promisedTitlesController.retrieve);
 
 module.exports = router;
