@@ -6,6 +6,7 @@
   "dependencies": {
     "apidoc": "^0.16.1",
     "app-root-path": "^1.0.0",
+    "async": "^2.1.2",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.1",
     "cors": "^2.7.1",
@@ -15,7 +16,8 @@
     "normalize-url": "^1.8.0",
     "parameters-middleware": "^0.1.0",
     "request": "^2.79.0",
-    "request-promise": "^4.1.1"
+    "request-promise": "^4.1.1",
+    "rxjs-es": "^5.0.0-beta.12"
   },
   "scripts": {
     "start": "node ./server.js",
