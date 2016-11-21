@@ -29,6 +29,7 @@ function retrieve(addresses, callback) {
           callback(null, helpers.renderHtml(addresses));
         }
       }.bind({current: address, all: addresses}));
+      return address;
     })
     .value();
 }

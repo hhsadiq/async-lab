@@ -1,2 +1,2 @@
 # async-lab
-A small laboratory to experiment async concepts using different tools
+A small laboratory to experiment async concepts using different libraries
