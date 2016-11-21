@@ -10,8 +10,8 @@ const _ = require('lodash');
 function retrieve(addresses, callback) {
   addresses = helpers.normalize(addresses);
   let callbackCount = 0;
-  let uris = _.uniqBy(addresses, 'normalizedUri');
-  uris.forEach((address, i, arr) => {
+  let uniqAddresses = _.uniqBy(addresses, 'normalizedUri');
+  uniqAddresses.forEach((address, i, arr) => {
     request(address.normalizedUri, function (err, res, body) {
       callbackCount++;
       if (err) {
