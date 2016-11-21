@@ -1,10 +1,10 @@
 'use strict';
 
 const express = require('express');
-let constants = require('../common/constants');
+const constants = require('../common/constants');
 const router = express.Router();
-let titlesController = require('./titles.controller');
-let CommonError = require('../common/commonErrors');
+const titlesController = require('./titles.controller');
+const CommonError = require('../common/commonErrors');
 
 /**
  * @api {get} /I/want/title/ Get an html file containing list of titles of websites addresses passed in query string

@@ -1,13 +1,13 @@
 'use strict';
-let titlesService = require('./titles.service');
+const titlesService = require('./titles.service');
 
 /*
  * Controller function returns titles for provided addresses
  */
 function retrieve(req, res, next) {
   titlesService.retrieve(req.query.address)
-  .then((titles) => {
-    res.status(200).sendFile(titles);
+  .then((html) => {
+    res.status(200).send(html);
   })
   .catch((error) => {
     next(error);

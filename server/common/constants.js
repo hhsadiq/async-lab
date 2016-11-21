@@ -19,5 +19,17 @@ module.exports = {
         }
       }
     }
+  },
+  response: {
+    html: `
+    <html>
+      <head></head>
+      <body>  
+          <h1> Following are the titles of given websites: </h1>      
+          <ul>
+          </ul>
+      </body>
+    </html>
+    `
   }
 };
