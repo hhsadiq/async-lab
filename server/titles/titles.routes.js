@@ -3,8 +3,7 @@
 const express = require('express');
 const constants = require('../common/constants');
 const router = express.Router();
-// const promisedTitlesController = require('./promises/titles.controller');
-const callbackedTitlesController = require('./callbacks/titles.controller');
+const titlesController = require('./async/titles.controller');
 const CommonError = require('../common/commonErrors');
 
 /**
@@ -13,7 +12,7 @@ const CommonError = require('../common/commonErrors');
  * @apiName Get Titles (Title)
  * @apiDescription This API takes the query Param and returns an html file or an error object
  *
- * @apiParam {String} address Webstie address
+ * @apiParam {String} address Website address
 
  * @apiSuccess {Object} Title title Object
  * @apiSuccess {Boolean} success Returns true for all 200 statuses.
@@ -44,6 +43,6 @@ router.get('/',
     }
     next();
   },
-  callbackedTitlesController.retrieve);
+  titlesController.retrieve);
 
 module.exports = router;

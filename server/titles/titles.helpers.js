@@ -4,6 +4,13 @@ const constants = require('../common/constants');
 const cheerio = require('cheerio');
 const normalizeUrl = require('normalize-url');
 
+let titleErrors = {
+  '400': 'NO RESPONSE',
+  '403': 'User does not have permission to perform this operation',
+  '404': 'No title found'
+};
+module.exports.titleErrors = titleErrors;
+
 /**
  * Find all addresses having given uri, and update their titles
  * @param addresses
