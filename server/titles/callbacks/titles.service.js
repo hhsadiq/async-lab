@@ -10,28 +10,25 @@ const _ = require('lodash');
 function retrieve(addresses, callback) {
   addresses = helpers.normalize(addresses);
   let callbackCount = 0;
-  _(addresses)
-    .uniqBy('normalizedUri')
-    .map((address, i, arr) => {
-      request(address.normalizedUri, function (err, res, body) {
-        callbackCount++;
-        if (err) {
-          console.error(err.msg || err.message);
-          helpers.updateTitles(this.all, this.current.normalizedUri,
-            helpers.titleErrors['400']);
-        }
-        if (!err && res.statusCode == 200) {
-          let $ = cheerio.load(body);
-          let title = $('title').text();
-          helpers.updateTitles(this.all, this.current.normalizedUri, title);
-        }
-        if (callbackCount === arr.length) {
-          callback(null, helpers.renderHtml(addresses));
-        }
-      }.bind({current: address, all: addresses}));
-      return address;
-    })
-    .value();
+  let uris = _.uniqBy(addresses, 'normalizedUri');
+  uris.forEach((address, i, arr) => {
+    request(address.normalizedUri, function (err, res, body) {
+      callbackCount++;
+      if (err) {
+        console.error(err.msg || err.message);
+        helpers.updateTitles(this.all, this.current.normalizedUri,
+          helpers.titleErrors['400']);
+      }
+      if (!err && res.statusCode == 200) {
+        let $ = cheerio.load(body);
+        let title = $('title').text();
+        helpers.updateTitles(this.all, this.current.normalizedUri, title);
+      }
+      if (callbackCount === arr.length) {
+        callback(null, helpers.renderHtml(addresses));
+      }
+    }.bind({current: address, all: addresses}));
+  });
 }
 
 /****************************** Module Exports ******************************* */
