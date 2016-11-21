@@ -3,7 +3,7 @@
 const express = require('express');
 const constants = require('../common/constants');
 const router = express.Router();
-const titlesController = require('./async/titles.controller');
+const titlesController = require('./streams/titles.controller');
 const CommonError = require('../common/commonErrors');
 
 /**
