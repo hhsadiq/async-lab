@@ -8,7 +8,7 @@ const Rx = require('rxjs/Rx');
 
 
 /*
- * Retrieve the titles from addresses using promises
+ * Retrieve the titles from addresses using rxjs
  */
 function retrieve(addresses) {
   addresses = helpers.normalize(addresses);
