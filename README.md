@@ -1,8 +1,8 @@
 ### Purpose
 
-The purpose of this repo is to practice different async techniques by solving a small real world problem
+The purpose of this repo is to practice different async techniques by solving a small real world problem.
 
-Implement following problem using node.js callback,  async.js waterfall, promises and rxjs observables.
+Currently the problem is being successfully implemented using **node.js callback**,  **async.js waterfall** and **promises**. The **rxjs observables** implementation is in progress.
 
 ### Problem
 
