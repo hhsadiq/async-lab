@@ -18,12 +18,13 @@ function retrieve(addresses) {
     .mergeMap(
       (address) => {
         return Rx.Observable.bindNodeCallback(request)(address.normalizedUri)
-        .catch(err => {
-          console.error(err.msg || err.message);
-          helpers.updateTitles(addresses, normalizeUrl(err.host),
-            helpers.titleErrors['400']);
-          return Rx.Observable.empty();
-        })},
+          .catch(err => {
+            console.error(err.msg || err.message);
+            helpers.updateTitles(addresses, normalizeUrl(err.host),
+              helpers.titleErrors['400']);
+            return Rx.Observable.empty();
+          });
+      },
       (address, res) => ({address: address, res: res}))
     .subscribe(
       (result) => {
