@@ -12,27 +12,28 @@ const Rx = require('rxjs/Rx');
  */
 function retrieve(addresses) {
   addresses = helpers.normalize(addresses);
-  let observable = Rx.Observable.bindNodeCallback(request);
   let html = new Rx.Subject();
-  let streams = _(addresses)
-    .uniqBy('normalizedUri')
-    .map(address => observable(address.normalizedUri))
-    .value();
   Rx.Observable
-    .merge(...streams)
+    .from(_.uniqBy(addresses, 'normalizedUri'))
+    .mergeMap(
+      (address) => {
+        return Rx.Observable.bindNodeCallback(request)(address.normalizedUri)
+        .catch(err => {
+          console.error(err.msg || err.message);
+          helpers.updateTitles(addresses, normalizeUrl(err.host),
+            helpers.titleErrors['400']);
+          return Rx.Observable.empty();
+        })},
+      (address, res) => ({address: address, res: res}))
     .subscribe(
-      (res) => {
-        let $ = cheerio.load(res[1]);
+      (result) => {
+        let $ = cheerio.load(result.res[1]);
         let title = $('title').text();
-        helpers.updateTitles(addresses, normalizeUrl(res[0].request.href), title);
-      }, (err) => {
-        console.error(err.msg || err.message);
-        helpers.updateTitles(addresses, normalizeUrl(err.host),
-          helpers.titleErrors['400']);
+        helpers.updateTitles(addresses, result.address.normalizedUri, title);
       },
-      () => {
-        html.next(helpers.renderHtml(addresses));
-      });
+      err => html.error(err),
+      () => html.next(helpers.renderHtml(addresses)));
+
   return html;
 }
 
