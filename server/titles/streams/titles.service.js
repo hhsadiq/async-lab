@@ -33,6 +33,7 @@ function retrieve(addresses) {
       (address, title) => {
         // no modification of global state (array), just emit the data objects as they become available
         return {
+          originalUri: address.originalUri,
           normalizedUri: address.normalizedUri,
           title: title
         };
