@@ -11,31 +11,32 @@ const Rx = require('rxjs/Rx');
  * Retrieve the titles from addresses using rxjs
  */
 function retrieve(addresses) {
-  addresses = helpers.normalize(addresses);
-  let html = new Rx.Subject();
-  Rx.Observable
-    .from(_.uniqBy(addresses, 'normalizedUri'))
+  // Rx is lazy, better to do all executing code in the rx stream
+  // Note; why not use the uniqBy in the normalize helper?)
+  // Its best not to subscribe() in your function which creates the rx stream but let the callee
+  // be responsible for the lifecycle of the Rx stream. 
+  return Rx.Observable
+    .from(_.uniqBy(helpers.normalize(addresses), 'normalizedUri'))
     .mergeMap(
       (address) => {
         return Rx.Observable.bindNodeCallback(request)(address.normalizedUri)
+          .map(res => {
+            // no `let` needed, not mutating the vars after initial assignment
+            const $ = cheerio.load(res[1]);
+            const title = $('title').text();
+          })
           .catch(err => {
-            console.error(err.msg || err.message);
-            helpers.updateTitles(addresses, normalizeUrl(err.host),
-              helpers.titleErrors['400']);
-            return Rx.Observable.empty();
+            //if something fails in your request OR mapping of res we end up here
+            return Rx.Observable.just(helpers.titleErrors['400']);
           });
       },
-      (address, res) => ({address: address, res: res}))
-    .subscribe(
-      (result) => {
-        let $ = cheerio.load(result.res[1]);
-        let title = $('title').text();
-        helpers.updateTitles(addresses, result.address.normalizedUri, title);
-      },
-      err => html.error(err),
-      () => html.next(helpers.renderHtml(addresses)));
-
-  return html;
+      (address, title) => {
+        // no modification of global state (array), just emit the data objects as they become available
+        return {
+          normalizedUri: address.normalizedUri,
+          title: title
+        };
+      });
 }
 
 /****************************** Module Exports ******************************* */
