@@ -2,8 +2,9 @@
 
 The purpose of this repo is to practice different async techniques by solving the following small real world problem.
 
-Currently the problem is being successfully implemented using **node.js callbacks**,  **async.js waterfall** and **promises**. The **rxjs observables** implementation is in progress.
+Currently the problem is being successfully implemented using **node.js callbacks**,  **async.js waterfall** and **promises** and **rxjs observables**.
 
+More problems will be added soon.
 ### Problem
 
 Create a node server which responds to one and only one route : GET /I/want/title
