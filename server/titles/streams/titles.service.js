@@ -3,7 +3,6 @@ const request = require('request');
 const cheerio = require('cheerio');
 const helpers = require('../titles.helpers');
 const _ = require('lodash');
-const normalizeUrl = require('normalize-url');
 const Rx = require('rxjs/Rx');
 
 
@@ -23,11 +22,12 @@ function retrieve(addresses) {
           .map(res => {
             // no `let` needed, not mutating the vars after initial assignment
             const $ = cheerio.load(res[1]);
-            const title = $('title').text();
+            return $('title').text();
           })
-          .catch(err => {
+          .catch((err) => {
+            console.error(err.msg || err.message);
             //if something fails in your request OR mapping of res we end up here
-            return Rx.Observable.just(helpers.titleErrors['400']);
+            return Rx.Observable.of(helpers.titleErrors['400']);
           });
       },
       (address, title) => {
