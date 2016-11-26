@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.use('/I/want/title', require('../titles/titles.routes'));
 
+router.use('/practice', require('../practice/practice.routes'));
+
 //generic catch others, not implemented
 router.get('/*', function(req, res) {
   res.status(404).send('URL not found');
