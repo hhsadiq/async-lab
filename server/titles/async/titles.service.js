@@ -9,10 +9,10 @@ const _ = require('lodash');
  */
 function retrieve(addresses, callback) {
   addresses = helpers.normalize(addresses);
-  let callbacks = _(addresses)
+  const callbacks = _(addresses)
     .uniqBy('normalizedUri')
-    .map((address) => {
-      return function (next) {
+    .map(address =>
+      (function (next) {
         request(address.normalizedUri, function (err, res, body) {
           if (err) {
             console.error(err.msg || err.message);
@@ -20,20 +20,20 @@ function retrieve(addresses, callback) {
               helpers.titleErrors['400']);
             next();
           }
-          if (!err && res.statusCode == 200) {
-            let $ = cheerio.load(body);
-            let title = $('title').text();
+          if (!err && res.statusCode === 200) {
+            const $ = cheerio.load(body);
+            const title = $('title').text();
             helpers.updateTitles(this.all, this.current.normalizedUri, title);
             next();
           }
-        }.bind({current: address, all: addresses}));
-      };
-    })
+        }.bind({ current: address, all: addresses }));
+      }),
+    )
     .value();
   async.waterfall(callbacks, () => {
     callback(null, helpers.renderHtml(addresses));
   });
 }
 
-/****************************** Module Exports ******************************* */
+/* ***************************** Module Exports ******************************* */
 exports.retrieve = retrieve;

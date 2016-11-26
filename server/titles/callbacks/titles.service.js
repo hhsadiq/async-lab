@@ -9,26 +9,26 @@ const _ = require('lodash');
 function retrieve(addresses, callback) {
   addresses = helpers.normalize(addresses);
   let callbackCount = 0;
-  let uniqAddresses = _.uniqBy(addresses, 'normalizedUri');
+  const uniqAddresses = _.uniqBy(addresses, 'normalizedUri');
   uniqAddresses.forEach((address, i, arr) => {
     request(address.normalizedUri, function (err, res, body) {
-      callbackCount++;
+      callbackCount += 1;
       if (err) {
         console.error(err.msg || err.message);
         helpers.updateTitles(this.all, this.current.normalizedUri,
           helpers.titleErrors['400']);
       }
-      if (!err && res.statusCode == 200) {
-        let $ = cheerio.load(body);
-        let title = $('title').text();
+      if (!err && res.statusCode === 200) {
+        const $ = cheerio.load(body);
+        const title = $('title').text();
         helpers.updateTitles(this.all, this.current.normalizedUri, title);
       }
       if (callbackCount === arr.length) {
         callback(null, helpers.renderHtml(addresses));
       }
-    }.bind({current: address, all: addresses}));
+    }.bind({ current: address, all: addresses }));
   });
 }
 
-/****************************** Module Exports ******************************* */
+/* ***************************** Module Exports ******************************* */
 exports.retrieve = retrieve;

@@ -1,3 +1,4 @@
+
 module.exports = {
   params: {
     titles: {
@@ -7,16 +8,16 @@ module.exports = {
           errors: {
             required: {
               code: 400,
-              msg: 'Missing query param address'
+              msg: 'Missing query param address',
             },
             invalid: {
               code: 400,
-              msg: 'Invalid query param(s) found'
-            }
-          }
-        }
-      }
-    }
+              msg: 'Invalid query param(s) found',
+            },
+          },
+        },
+      },
+    },
   },
   response: {
     html: `
@@ -28,6 +29,6 @@ module.exports = {
           </ul>
       </body>
     </html>
-    `
-  }
+    `,
+  },
 };

@@ -11,5 +11,5 @@ function temp() {
   return strings.combineLatest(numbers, (str, num) => str + num);
 }
 
-/****************************** Module Exports ******************************* */
+/* ***************************** Module Exports ******************************* */
 exports.temp = temp;

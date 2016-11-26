@@ -13,7 +13,7 @@ class CommonErrors {
     });
     return {
       code: errorCode,
-      msg: overideMessage || this[errorCode] || this.default
+      msg: overideMessage || this[errorCode] || this.default,
     };
   }
 }

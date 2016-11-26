@@ -1,33 +1,33 @@
-let _ = require('lodash');
+const _ = require('lodash');
 
 class CommonResponse {
   constructor() {
     Object.assign(this, {
-      _object: {
+      privateObject: {
         success: true,
-        message: ''
-      }
+        message: '',
+      },
     });
     return this;
   }
 
   get object() {
-    return this._object;
+    return this.privateObject;
   }
 
   addMsg(message) {
-    this._object.message = message;
+    this.privateObject.message = message;
     return this;
   }
 
   addData(key, data) {
-    this._object[key] = data;
+    this.privateObject[key] = data;
     return this;
   }
 
   addDataWithKeys(data) {
     _.each(data, (value, key) => {
-      this._object[key] = value;
+      this.privateObject[key] = value;
     });
     return this;
   }

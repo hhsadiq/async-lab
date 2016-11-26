@@ -9,17 +9,17 @@ const _ = require('lodash');
  */
 function retrieve(addresses) {
   addresses = helpers.normalize(addresses);
-  let promises = _(addresses)
+  const promises = _(addresses)
     .uniqBy('normalizedUri')
     .map((address) => {
       const options = {
         uri: address.normalizedUri,
-        transform: html => (
-          {
+        transform: html =>
+          ({
             $: cheerio.load(html),
             uri: this.uri,
-          }
-        ) };
+          }),
+      };
       return rp(options)
         .then((res) => {
           const title = res.$('title').text();
