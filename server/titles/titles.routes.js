@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const constants = require('../common/constants');
 const router = express.Router();

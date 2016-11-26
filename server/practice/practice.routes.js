@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const router = express.Router();
 const practiceController = require('./practice.controller');

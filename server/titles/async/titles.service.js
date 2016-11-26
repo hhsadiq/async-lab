@@ -1,4 +1,3 @@
-'use strict';
 const request = require('request');
 const async = require('async');
 const cheerio = require('cheerio');

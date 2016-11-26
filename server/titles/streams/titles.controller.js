@@ -1,4 +1,3 @@
-'use strict';
 const titlesService = require('./titles.service');
 const titleHelpers = require('../titles.helpers');
 

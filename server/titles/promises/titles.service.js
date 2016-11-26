@@ -1,4 +1,3 @@
-'use strict';
 const rp = require('request-promise');
 const Promise = require('bluebird');
 const cheerio = require('cheerio');

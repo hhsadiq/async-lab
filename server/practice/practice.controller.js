@@ -1,4 +1,3 @@
-'use strict';
 const practiceService = require('./practice.service');
 
 /*

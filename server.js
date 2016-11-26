@@ -1,5 +1,3 @@
-'use strict';
-
 let path = require('path');
 //multi enviro support. Minimum is a .env file. See readme
 require('dotenv').config({

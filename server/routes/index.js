@@ -2,7 +2,6 @@
  * BaseController will load all the controllers and API routes defined within them
  */
 
-'use strict';
 const express = require('express');
 const router = express.Router();
 

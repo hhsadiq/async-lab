@@ -1,4 +1,3 @@
-'use strict';
 const request = require('request');
 const cheerio = require('cheerio');
 const helpers = require('../titles.helpers');

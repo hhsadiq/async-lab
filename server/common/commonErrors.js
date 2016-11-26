@@ -1,5 +1,3 @@
-'use strict';
-
 class CommonErrors {
   constructor(errorCode, overideMessage) {
     Object.assign(this, {
