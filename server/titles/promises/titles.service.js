@@ -14,11 +14,12 @@ function retrieve(addresses) {
     .map((address) => {
       const options = {
         uri: address.normalizedUri,
-        transform: html =>
-          ({
+        transform: function (html) {
+          return {
             $: cheerio.load(html),
             uri: this.uri,
-          }),
+          };
+        },
       };
       return rp(options)
         .then((res) => {

@@ -18,7 +18,7 @@ module.exports.titleErrors = titleErrors;
  */
 function updateTitles(addresses, uri, title) {
   addresses.filter(address => address.normalizedUri === uri)
-    .forEach(address => (address.title = title));
+    .forEach(address => address.title = title);
 }
 module.exports.updateTitles = updateTitles;
 

@@ -27,7 +27,7 @@ function retrieve(addresses, callback) {
             next();
           }
         }.bind({ current: address, all: addresses }));
-      }),
+      })
     )
     .value();
   async.waterfall(callbacks, () => {

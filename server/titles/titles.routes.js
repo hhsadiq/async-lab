@@ -1,6 +1,6 @@
 const express = require('express');
 const constants = require('../common/constants');
-const titlesController = require('./streams/titles.controller');
+const titlesController = require('./promises/titles.controller');
 const CommonError = require('../common/commonErrors');
 
 const router = express.Router();
