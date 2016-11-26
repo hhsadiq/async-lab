@@ -25,6 +25,7 @@ module.exports = {
       "error", {
         allow: [
           "warn",
+          "info",
           "error"]
       }
     ]

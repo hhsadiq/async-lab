@@ -9,13 +9,11 @@ class CommonErrors {
       412: 'Failed Validation',
       500: 'An error occured. Unable to fulfil request',
       501: 'Not Implemented',
-      default: 'An unknown error occurred'
+      default: 'An unknown error occurred',
     });
     return {
       code: errorCode,
-      msg: overideMessage ?
-        overideMessage : this[errorCode] ?
-        this[errorCode] : this.default
+      msg: overideMessage || this[errorCode] || this.default
     };
   }
 }

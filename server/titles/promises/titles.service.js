@@ -12,22 +12,21 @@ function retrieve(addresses) {
   let promises = _(addresses)
     .uniqBy('normalizedUri')
     .map((address) => {
-      let options = {
+      const options = {
         uri: address.normalizedUri,
-        transform: function (html) {
-          return {
+        transform: html => (
+          {
             $: cheerio.load(html),
-            uri: this.uri
-          };
-        }
-      };
+            uri: this.uri,
+          }
+        ) };
       return rp(options)
         .then((res) => {
-          let title = res.$('title').text();
+          const title = res.$('title').text();
           helpers.updateTitles(addresses, res.uri, title);
           return title;
         })
-        .catch(function (err) {
+        .catch((err) => {
           console.error(err.msg || err.message);
           helpers.updateTitles(addresses, err.options.uri,
             helpers.titleErrors['400']);
@@ -39,5 +38,5 @@ function retrieve(addresses) {
     .then(() => helpers.renderHtml(addresses));
 }
 
-/****************************** Module Exports ******************************* */
+/* ***************************** Module Exports ******************************* */
 exports.retrieve = retrieve;

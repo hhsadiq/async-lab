@@ -17,19 +17,19 @@ function retrieve(addresses) {
     .from(normalized)
     .distinct(address => address.normalizedUri)
     .mergeMap(
-      (address) => {
-        return Rx.Observable.bindNodeCallback(request)(address.normalizedUri)
-          .map(res => {
+      address => (
+        Rx.Observable.bindNodeCallback(request)(address.normalizedUri)
+          .map((res) => {
             // no `let` needed, not mutating the vars after initial assignment
             const $ = cheerio.load(res[1]);
             return $('title').text();
           })
           .catch((err) => {
             console.error(err.msg || err.message);
-            //if something fails in your request OR mapping of res we end up here
+            // if something fails in your request OR mapping of res we end up here
             return Rx.Observable.of(helpers.titleErrors['400']);
-          });
-      },
+          })
+      ),
       (address, title) => (
         // no modification of global state (array), just emit the
         // data objects as they become available
@@ -39,5 +39,5 @@ function retrieve(addresses) {
     .mergeMap(group => group);
 }
 
-/****************************** Module Exports ******************************* */
+/* ***************************** Module Exports ******************************* */
 exports.retrieve = retrieve;

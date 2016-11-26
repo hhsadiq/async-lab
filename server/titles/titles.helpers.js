@@ -3,10 +3,10 @@ const constants = require('../common/constants');
 const cheerio = require('cheerio');
 const normalizeUrl = require('normalize-url');
 
-let titleErrors = {
-  '400': 'NO RESPONSE',
-  '403': 'User does not have permission to perform this operation',
-  '404': 'No title found'
+const titleErrors = {
+  400: 'NO RESPONSE',
+  403: 'User does not have permission to perform this operation',
+  404: 'No title found',
 };
 module.exports.titleErrors = titleErrors;
 
@@ -18,7 +18,7 @@ module.exports.titleErrors = titleErrors;
  */
 function updateTitles(addresses, uri, title) {
   addresses.filter(address => address.normalizedUri === uri)
-    .forEach(address => address.title = title);
+    .forEach(address => (address.title = title));
 }
 module.exports.updateTitles = updateTitles;
 
@@ -29,12 +29,12 @@ module.exports.updateTitles = updateTitles;
  */
 function normalize(addresses) {
   return (_.isArray(addresses) ? addresses : [addresses])
-    .map(address => {
-      return {
+    .map(address => (
+      {
         originalUri: address,
-        normalizedUri: normalizeUrl(address)
-      };
-    });
+        normalizedUri: normalizeUrl(address),
+      }
+    ));
 }
 module.exports.normalize = normalize;
 
@@ -46,14 +46,14 @@ module.exports.normalize = normalize;
  * @returns {Array}
  */
 function groupSimilarAddresses(normalizedAddresses,
-                                         currentAddress,
-                                         currentTitle) {
+                               currentAddress,
+                               currentTitle) {
   return normalizedAddresses
     .filter(val => val.normalizedUri === currentAddress.normalizedUri)
     .map(val => ({
       originalUri: val.originalUri,
       normalizedUri: val.normalizedUri,
-      title: currentTitle
+      title: currentTitle,
     }));
 }
 module.exports.groupSimilarAddresses = groupSimilarAddresses;
@@ -64,10 +64,10 @@ module.exports.groupSimilarAddresses = groupSimilarAddresses;
  * @returns {*}
  */
 function renderHtml(addresses) {
-  let html = constants.response.html;
-  let $ = cheerio.load(html);
-  addresses.forEach(address => {
-    let title = address.title === titleErrors['400'] ?
+  const html = constants.response.html;
+  const $ = cheerio.load(html);
+  addresses.forEach((address) => {
+    const title = address.title === titleErrors['400'] ?
       titleErrors['400'] : `"${address.title}"`;
     $('ul').append(`<li>${address.originalUri} - ${title}</li>`);
   });

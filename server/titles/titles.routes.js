@@ -1,11 +1,13 @@
 const express = require('express');
 const constants = require('../common/constants');
-const router = express.Router();
 const titlesController = require('./streams/titles.controller');
 const CommonError = require('../common/commonErrors');
 
+const router = express.Router();
+
 /**
- * @api {get} /I/want/title/ Get an html file containing list of titles of websites addresses passed in query string
+ * @api {get} /I/want/title/ Get an html file containing list of titles
+ * of websites addresses passed in query string
  * @apiGroup Title
  * @apiName Get Titles (Title)
  * @apiDescription This API takes the query Param and returns an html file or an error object
@@ -29,8 +31,8 @@ const CommonError = require('../common/commonErrors');
  *     }
  */
 router.get('/',
-  function(req, res, next) {
-    let validation = constants.params.titles.retrieve.query;
+  (req, res, next) => {
+    const validation = constants.params.titles.retrieve.query;
     if (!req.query[validation.required]) {
       next(new CommonError(validation.errors.required.code,
         validation.errors.required.msg));

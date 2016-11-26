@@ -1,35 +1,34 @@
-let path = require('path');
-//multi enviro support. Minimum is a .env file. See readme
+// multi enviro support. Minimum is a .env file. See readme
 require('dotenv').config({
-  silent: true
+  silent: true,
 });
 
 //Server Variables
-let http = require('http');
-let port = process.env.PORT || 8888;
-let cors = require('cors');
-let express = require('express');
-let bodyParser = require('body-parser');
-let app = express();
+const http = require('http');
+const port = process.env.PORT || 8888;
+const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
-let constants = require('./server/common/constants');
+const constants = require('./server/common/constants');
 
-let CommonError = require('./server/common/commonErrors');
 
 app.use(cors());
 
-app.options('*', cors());//enable preflight checks
+// enable preflight checks
+app.options('*', cors());
 
 app.use(bodyParser.urlencoded({
-  'extended': 'true'
+  extended: 'true',
 }));
 
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // loading routes
 app.use('', require('./server/routes/index'));
 
-//static route for the docs
+// static route for the docs
 if (process.env.NODE_ENV === 'development') {
   app.use('/docs', express.static(__dirname + '/docs'));
 }
@@ -40,16 +39,12 @@ app.use(require('./server/middleware/errorHandler.middleware'));
 // setup the web server
 app.server = http.Server(app);
 
-app.server.listen(port, function() {
-  console.info('Server is running on port ' + port);
-});
+app.server.listen(port, () => (
+  console.info(`Server is running on port ${port}`)
+));
 
-process.on('uncaughtException', function(err) {
-  console.error('err : ' + err);
-});
+process.on('uncaughtException', err => console.error(`err : + ${err}`));
 
-exports.close = function(callback) {
-  app.server.close(callback);
-};
+exports.close = callback => app.server.close(callback);
 
 exports.instance = app.server;

@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const practiceController = require('./practice.controller');
+
+const router = express.Router();
 
 /**
  * @api {get} /practice/ A practice route to run Rxjs examples and poke around
