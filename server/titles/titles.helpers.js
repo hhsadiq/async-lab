@@ -55,7 +55,7 @@ function groupSimilarAddresses(normalizedAddresses,
       originalUri: val.originalUri,
       normalizedUri: val.normalizedUri,
       title: currentTitle
-    }))
+    }));
 }
 module.exports.groupSimilarAddresses = groupSimilarAddresses;
 
