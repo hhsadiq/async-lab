@@ -13,9 +13,11 @@ function retrieve(addresses) {
   // Rx is lazy, better to do all executing code in the rx stream
   // Note; why not use the uniqBy in the normalize helper?)
   // Its best not to subscribe() in your function which creates the rx stream but let the callee
-  // be responsible for the lifecycle of the Rx stream. 
+  // be responsible for the lifecycle of the Rx stream.
+  const normalized = helpers.normalize(addresses);
   return Rx.Observable
-    .from(_.uniqBy(helpers.normalize(addresses), 'normalizedUri'))
+    .from(normalized)
+    .distinct(address => address.normalizedUri)
     .mergeMap(
       (address) => {
         return Rx.Observable.bindNodeCallback(request)(address.normalizedUri)
@@ -30,14 +32,13 @@ function retrieve(addresses) {
             return Rx.Observable.of(helpers.titleErrors['400']);
           });
       },
-      (address, title) => {
-        // no modification of global state (array), just emit the data objects as they become available
-        return {
-          originalUri: address.originalUri,
-          normalizedUri: address.normalizedUri,
-          title: title
-        };
-      });
+      (address, title) => (
+        // no modification of global state (array), just emit the
+        // data objects as they become available
+        helpers.groupSimilarAddresses(normalized, address, title)
+      ))
+    // flatten the group
+    .mergeMap(group => group);
 }
 
 /****************************** Module Exports ******************************* */

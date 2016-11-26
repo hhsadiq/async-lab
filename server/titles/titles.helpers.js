@@ -40,6 +40,26 @@ function normalize(addresses) {
 module.exports.normalize = normalize;
 
 /**
+ * Groups the similar uris and update their titles
+ * @param normalizedAddresses
+ * @param currentAddress
+ * @param currentTitle
+ * @returns {Array}
+ */
+function groupSimilarAddresses(normalizedAddresses,
+                                         currentAddress,
+                                         currentTitle) {
+  return normalizedAddresses
+    .filter(val => val.normalizedUri === currentAddress.normalizedUri)
+    .map(val => ({
+      originalUri: val.originalUri,
+      normalizedUri: val.normalizedUri,
+      title: currentTitle
+    }))
+}
+module.exports.groupSimilarAddresses = groupSimilarAddresses;
+
+/**
  * Render html and insert li tags for titles
  * @param addresses
  * @returns {*}
